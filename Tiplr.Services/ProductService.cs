@@ -61,7 +61,7 @@ namespace Tiplr.Services
             using (var ctx = new ApplicationDbContext())
             {
                 var query = ctx.Products
-                    .Where(e => e.Active == true).OrderBy(e => e.ProductCategory).ThenBy(e => e.ProductName)
+                    .Where(e => e.Active == true).OrderBy(e => e.CategoryId).ThenBy(e => e.ProductName)
                     .Select(e =>
                                new ProductListItem
                                {
@@ -93,9 +93,11 @@ namespace Tiplr.Services
                     OrderBy = entity.OrderBy,
                     UnitPrice = entity.UnitPrice,
                     UnitsPerPack = entity.UnitsPerPack,
+                    CasePackPrice = entity.CasePackPrice,
                     Par = entity.Par,
                     LastModifiedDtTm = entity.LastModifiedDtTm,
-                    UserId = entity.ApplicationUser.Id
+                    UserId = entity.ApplicationUser.Id,
+                    Active = entity.Active                   
                 };
             }
 

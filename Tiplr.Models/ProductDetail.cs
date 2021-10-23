@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tiplr.Data;
 
 namespace Tiplr.Models
 {
@@ -16,13 +17,16 @@ namespace Tiplr.Models
         public bool Active { get; set; }
         [Display(Name = "Description")]
         public string ProductDescription { get; set; }
-        [Display(Name = "Inventory Category")]
+        [Display(Name = "Product Category")]
         public int? CategoryId { get; set; }
         [Display(Name = "Count Units")]
+        public virtual ProductCategory ProductCategory { get; set; }
         public string CountBy { get; set; }
         [Display(Name = "Ordered By Units")]
         public string OrderBy { get; set; }
         [Display(Name = "Units per ordered pack")]
+
+        public decimal CasePackPrice { get; set; }
         public int UnitsPerPack { get; set; }
         [Display(Name = "Unit Price")]
         public decimal UnitPrice { get; set; }
