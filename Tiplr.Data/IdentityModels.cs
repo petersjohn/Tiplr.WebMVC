@@ -34,7 +34,7 @@ namespace Tiplr.Data
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Inventory> Inventories { get; set; }
-        public DbSet<InventoryItem> Inventories { get; set; }
+        public DbSet<InventoryItem> InventoryItems { get; set; }
         public DbSet<Order> Orders  { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<OrderStatus> OrderStatuses { get; set; }
