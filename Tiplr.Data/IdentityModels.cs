@@ -45,6 +45,8 @@ namespace Tiplr.Data
             modelBuilder
                 .Conventions
                 .Remove<PluralizingTableNameConvention>();
+                 modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
+                 modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 
             modelBuilder
                 .Configurations

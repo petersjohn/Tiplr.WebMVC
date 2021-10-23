@@ -19,7 +19,7 @@ namespace Tiplr.Data
         [Required]
         [ForeignKey(nameof(InventoryItem))]
         public int InventoryItemId { get; set; }
-        public virtual Inventory Inventory { get; set; }
+        public virtual InventoryItem InventoryItem { get; set; }
         [Required]
         [ForeignKey(nameof(Order))]
         public int OrderId { get; set; }

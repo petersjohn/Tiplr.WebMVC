@@ -13,7 +13,12 @@ namespace Tiplr.Data
         [Key]
         public int ProductId { get; set; }
         [Required]
+        [MaxLength(50,ErrorMessage = "Maximum of 50 characters allowed")]
+        [Display(Name = "Name")]
         public string ProductName { get; set; }
+        [MaxLength(150, ErrorMessage = "Maximum of 150 characters allowed")]
+        [Display(Name = "Description")]
+        public string ProductDescription { get; set; }
         [ForeignKey(nameof(ProductCategory))]
         public int? CategoryId { get; set; }
         public virtual ProductCategory ProductCategory { get; set; }
