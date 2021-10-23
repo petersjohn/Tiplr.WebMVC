@@ -1,25 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tiplr.Data;
 
-namespace Tiplr.Data
+namespace Tiplr.Models
 {
-    public class Product
-    { 
-        [Key]
+    public class ProductEdit
+    {
         public int ProductId { get; set; }
         [Required]
-        [MaxLength(50,ErrorMessage = "Maximum of 50 characters allowed")]
+        [MaxLength(50, ErrorMessage = "Maximum of 50 characters allowed")]
         [Display(Name = "Name")]
         public string ProductName { get; set; }
         [MaxLength(150, ErrorMessage = "Maximum of 150 characters allowed")]
         [Display(Name = "Description")]
         public string ProductDescription { get; set; }
-        [ForeignKey(nameof(ProductCategory))]
         public int? CategoryId { get; set; }
         public virtual ProductCategory ProductCategory { get; set; }
         [Required]
@@ -31,13 +29,5 @@ namespace Tiplr.Data
         [Required]
         public decimal UnitPrice { get; set; }
         public int Par { get; set; }
-        public bool Active { get; set; }
-        public DateTimeOffset CreatedDtTm { get; set; }
-        public DateTimeOffset LastModifiedDtTm { get; set; }
-        public DateTimeOffset? InactiveDtTm { get; set; }
-        [ForeignKey("ApplicationUser")]
-        public string UserId { get; set; }
-        public virtual ApplicationUser User { get; set; }
-
     }
 }
