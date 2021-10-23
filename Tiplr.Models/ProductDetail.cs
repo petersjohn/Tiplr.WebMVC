@@ -9,6 +9,8 @@ namespace Tiplr.Models
 {
     public class ProductDetail
     {
+        public int ProductId { get; set; }
+
         [Display(Name = "Name")]
         public string ProductName { get; set; }
         public bool Active { get; set; }

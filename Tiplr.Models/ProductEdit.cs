@@ -25,9 +25,13 @@ namespace Tiplr.Models
         [Required]
         public string OrderBy { get; set; }
         [Required]
-        public int UnitsPerPack { get; set; }
+        [Display(Name = "Case/Pack Price")]
+        public decimal CasePackPrice { get; set; }
         [Required]
-        public decimal UnitPrice { get; set; }
+        public int UnitsPerPack { get; set; }
+       
         public int Par { get; set; }
+
+        public bool Active { get; set; }
     }
 }

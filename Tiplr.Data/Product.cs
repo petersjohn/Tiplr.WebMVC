@@ -29,15 +29,27 @@ namespace Tiplr.Data
         [Required]
         public int UnitsPerPack { get; set; }
         [Required]
-        public decimal UnitPrice { get; set; }
+        public decimal CasePackPrice { get; set; }
+
+        public decimal UnitPrice
+        {
+            /*get
+            {
+                var price = Math.Round((CasePackPrice / UnitsPerPack), 2);
+                return price;
+            }*/
+            get; set;
+            
+        }
         public int Par { get; set; }
         public bool Active { get; set; }
         public DateTimeOffset CreatedDtTm { get; set; }
         public DateTimeOffset LastModifiedDtTm { get; set; }
         public DateTimeOffset? InactiveDtTm { get; set; }
-        [ForeignKey("ApplicationUser")]
-        public string UserId { get; set; }
-        public virtual ApplicationUser User { get; set; }
+        [ForeignKey(nameof(ApplicationUser))]
+        [Display(Name = "UserId")]
+        public string Id { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
 
     }
 }
