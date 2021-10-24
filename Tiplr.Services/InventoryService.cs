@@ -62,8 +62,11 @@ namespace Tiplr.Services
                 entity.Finalized = model.Finalized;
                 entity.LastModifiedDtTm = DateTimeOffset.Now;
                 entity.UpdtUser = _userId;
-        }
 
+                return ctx.SaveChanges() == 1
+             }
+           
+        }
 
         //helper method
         private int FinalizedOpenCheck()
