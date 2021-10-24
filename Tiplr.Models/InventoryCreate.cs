@@ -5,16 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tiplr.Data
+namespace Tiplr.Models
 {
-    public class Inventory
+    public class InventoryCreate
     {
-        [Key]
         public int InventoryId { get; set; }
+        [Display(Name = "Inventory Date")]
         public DateTimeOffset InventoryDate { get; set; }
-        public bool Finalized { get; set; }
-        public Guid CreatedByUser { get; set; }
-        public DateTimeOffset LastModifiedDtTm { get; set; }
-        public Guid UpdtUser { get; set; }
+
     }
 }

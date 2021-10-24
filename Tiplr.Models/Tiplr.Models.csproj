@@ -79,6 +79,10 @@
     <Compile Include="CategoryDetail.cs" />
     <Compile Include="CategoryEdit.cs" />
     <Compile Include="CategoryListItem.cs" />
+    <Compile Include="InventoryCreate.cs" />
+    <Compile Include="InventoryDetail.cs" />
+    <Compile Include="InventoryFinalize.cs" />
+    <Compile Include="InventoryListItem.cs" />
     <Compile Include="ProductCreate.cs" />
     <Compile Include="ProductDetail.cs" />
     <Compile Include="ProductEdit.cs" />
