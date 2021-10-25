@@ -63,7 +63,7 @@ namespace Tiplr.Services
                 entity.LastModifiedDtTm = DateTimeOffset.Now;
                 entity.UpdtUser = _userId;
 
-                return ctx.SaveChanges() == 1
+                return ctx.SaveChanges() == 1;
              }
            
         }
