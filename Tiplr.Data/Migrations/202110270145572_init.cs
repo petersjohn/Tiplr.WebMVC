@@ -3,7 +3,7 @@ namespace Tiplr.Data.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialCreate : DbMigration
+    public partial class init : DbMigration
     {
         public override void Up()
         {
@@ -29,38 +29,14 @@ namespace Tiplr.Data.Migrations
                         ProductId = c.Int(nullable: false),
                         OnHandCount = c.Double(nullable: false),
                         LastModifiedDtTm = c.DateTimeOffset(nullable: false, precision: 7),
-                        UpdtUser = c.Guid(nullable: false),
+                        Id = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => t.InventoryItemId)
+                .ForeignKey("dbo.ApplicationUser", t => t.Id)
                 .ForeignKey("dbo.Inventory", t => t.InventoryId)
                 .ForeignKey("dbo.Product", t => t.ProductId)
                 .Index(t => t.InventoryId)
-                .Index(t => t.ProductId);
-            
-            CreateTable(
-                "dbo.Product",
-                c => new
-                    {
-                        ProductId = c.Int(nullable: false, identity: true),
-                        ProductName = c.String(nullable: false, maxLength: 50),
-                        ProductDescription = c.String(maxLength: 150),
-                        CategoryId = c.Int(),
-                        CountBy = c.String(nullable: false),
-                        OrderBy = c.String(nullable: false),
-                        UnitsPerPack = c.Int(nullable: false),
-                        CasePackPrice = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        UnitPrice = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        Par = c.Int(nullable: false),
-                        Active = c.Boolean(nullable: false),
-                        CreatedDtTm = c.DateTimeOffset(nullable: false, precision: 7),
-                        LastModifiedDtTm = c.DateTimeOffset(nullable: false, precision: 7),
-                        InactiveDtTm = c.DateTimeOffset(precision: 7),
-                        Id = c.String(maxLength: 128),
-                    })
-                .PrimaryKey(t => t.ProductId)
-                .ForeignKey("dbo.ApplicationUser", t => t.Id)
-                .ForeignKey("dbo.ProductCategory", t => t.CategoryId)
-                .Index(t => t.CategoryId)
+                .Index(t => t.ProductId)
                 .Index(t => t.Id);
             
             CreateTable(
@@ -123,6 +99,32 @@ namespace Tiplr.Data.Migrations
                 .ForeignKey("dbo.IdentityRole", t => t.IdentityRole_Id)
                 .Index(t => t.ApplicationUser_Id)
                 .Index(t => t.IdentityRole_Id);
+            
+            CreateTable(
+                "dbo.Product",
+                c => new
+                    {
+                        ProductId = c.Int(nullable: false, identity: true),
+                        ProductName = c.String(nullable: false, maxLength: 50),
+                        ProductDescription = c.String(maxLength: 150),
+                        CategoryId = c.Int(),
+                        CountBy = c.String(nullable: false),
+                        OrderBy = c.String(nullable: false),
+                        UnitsPerPack = c.Int(nullable: false),
+                        CasePackPrice = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        UnitPrice = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        Par = c.Int(nullable: false),
+                        Active = c.Boolean(nullable: false),
+                        CreatedDtTm = c.DateTimeOffset(nullable: false, precision: 7),
+                        LastModifiedDtTm = c.DateTimeOffset(nullable: false, precision: 7),
+                        InactiveDtTm = c.DateTimeOffset(precision: 7),
+                        Id = c.String(maxLength: 128),
+                    })
+                .PrimaryKey(t => t.ProductId)
+                .ForeignKey("dbo.ApplicationUser", t => t.Id)
+                .ForeignKey("dbo.ProductCategory", t => t.CategoryId)
+                .Index(t => t.CategoryId)
+                .Index(t => t.Id);
             
             CreateTable(
                 "dbo.ProductCategory",
@@ -203,21 +205,23 @@ namespace Tiplr.Data.Migrations
             DropForeignKey("dbo.InventoryItem", "ProductId", "dbo.Product");
             DropForeignKey("dbo.Product", "CategoryId", "dbo.ProductCategory");
             DropForeignKey("dbo.Product", "Id", "dbo.ApplicationUser");
+            DropForeignKey("dbo.InventoryItem", "InventoryId", "dbo.Inventory");
+            DropForeignKey("dbo.InventoryItem", "Id", "dbo.ApplicationUser");
             DropForeignKey("dbo.IdentityUserRole", "ApplicationUser_Id", "dbo.ApplicationUser");
             DropForeignKey("dbo.IdentityUserLogin", "ApplicationUser_Id", "dbo.ApplicationUser");
             DropForeignKey("dbo.IdentityUserClaim", "ApplicationUser_Id", "dbo.ApplicationUser");
-            DropForeignKey("dbo.InventoryItem", "InventoryId", "dbo.Inventory");
             DropIndex("dbo.Order", new[] { "OrderStatusId" });
             DropIndex("dbo.Order", new[] { "InventoryId" });
             DropIndex("dbo.OrderItem", new[] { "OrderId" });
             DropIndex("dbo.OrderItem", new[] { "InventoryItemId" });
             DropIndex("dbo.OrderItem", new[] { "ProductId" });
+            DropIndex("dbo.Product", new[] { "Id" });
+            DropIndex("dbo.Product", new[] { "CategoryId" });
             DropIndex("dbo.IdentityUserRole", new[] { "IdentityRole_Id" });
             DropIndex("dbo.IdentityUserRole", new[] { "ApplicationUser_Id" });
             DropIndex("dbo.IdentityUserLogin", new[] { "ApplicationUser_Id" });
             DropIndex("dbo.IdentityUserClaim", new[] { "ApplicationUser_Id" });
-            DropIndex("dbo.Product", new[] { "Id" });
-            DropIndex("dbo.Product", new[] { "CategoryId" });
+            DropIndex("dbo.InventoryItem", new[] { "Id" });
             DropIndex("dbo.InventoryItem", new[] { "ProductId" });
             DropIndex("dbo.InventoryItem", new[] { "InventoryId" });
             DropTable("dbo.IdentityRole");
@@ -225,11 +229,11 @@ namespace Tiplr.Data.Migrations
             DropTable("dbo.Order");
             DropTable("dbo.OrderItem");
             DropTable("dbo.ProductCategory");
+            DropTable("dbo.Product");
             DropTable("dbo.IdentityUserRole");
             DropTable("dbo.IdentityUserLogin");
             DropTable("dbo.IdentityUserClaim");
             DropTable("dbo.ApplicationUser");
-            DropTable("dbo.Product");
             DropTable("dbo.InventoryItem");
             DropTable("dbo.Inventory");
         }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Tiplr.Models
 {
-    public class InventoryListItem
+    public class InventoryList
     {
         public int InventoryId { get; set; }
         [Display(Name = "Inventory Date")]

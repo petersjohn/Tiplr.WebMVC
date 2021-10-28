@@ -10,7 +10,6 @@ namespace Tiplr.Data.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "Tiplr.Data.ApplicationDbContext";
         }
 
         protected override void Seed(Tiplr.Data.ApplicationDbContext context)

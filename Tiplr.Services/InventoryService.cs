@@ -37,14 +37,14 @@ namespace Tiplr.Services
             }
         }
 
-        public IEnumerable<InventoryListItem> GetInventories()
+        public IEnumerable<InventoryList> GetInventories()
         {
             using( var ctx = new ApplicationDbContext())
             {
                 var query = ctx.Inventories.Where(
                     e => e.InventoryId > 0).OrderByDescending(e => e.InventoryDate)
                     .Select(e =>
-                            new InventoryListItem
+                            new InventoryList
                             {
                                 InventoryId = e.InventoryId,
                                 Finalized = e.Finalized,
@@ -66,6 +66,17 @@ namespace Tiplr.Services
                 return ctx.SaveChanges() == 1;
              }
            
+        }
+
+        public bool DeleteInventory(int id)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity = ctx.Inventories.Single(e => e.InventoryId == id);
+                ctx.Inventories.Remove(entity);
+
+                return ctx.SaveChanges() == 1;
+            }
         }
 
         //helper method
