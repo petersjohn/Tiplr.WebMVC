@@ -113,8 +113,6 @@ namespace Tiplr.Services
                 return ctx.SaveChanges() == 1;
             }
         }
-
-
     }
 
 }
