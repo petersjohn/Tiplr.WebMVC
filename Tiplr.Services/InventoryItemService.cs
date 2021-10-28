@@ -25,16 +25,32 @@ namespace Tiplr.Services
                 ProductId = model.ProductId,
                 OnHandCount = model.OnHandCount,
                 LastModifiedDtTm = DateTimeOffset.Now,
-                Id = model.ApplicationUser.Id
+                Id = model.Id
             };
             using (var ctx = new ApplicationDbContext())
             {
                 ctx.InventoryItems.Add(entity);
                 return ctx.SaveChanges() == 1;
             }
-
         }
 
+        public bool CreateCountList(IEnumerable<ProductListItem> Products)
+        {
+            var model = new InventoryItemCreate();
+            model.InventoryId = GetCurrentInvId();
+            int saveCnt = 0;
+            foreach (var item in Products)
+            {
+                model.OnHandCount = 0;
+                model.ProductId = item.ProductId;
+                model.Id = _userId.ToString();
+                model.LastModifiedDtTm = DateTimeOffset.Now;
+                if (InventoryCountCreate(model)) saveCnt += 1;
+            }
+            if (saveCnt > 0)
+                return true;
+            return false;
+        }
         public IEnumerable<InventoryCountItem> GetOnHandInventory(int inventoryId)
         {
             using (var ctx = new ApplicationDbContext())
@@ -55,12 +71,6 @@ namespace Tiplr.Services
         {
             using (var ctx = new ApplicationDbContext())
             {
-                /*var query = ctx.InventoryItems
-                    .Join(ctx.Products,
-                    inv => inv.InventoryId,
-                    prd => prd.ProductId,
-                    (inv,prd)=>new {Inv = inv, Prd = prd})
-                    .Select(e=> new InventoryCountItem*/
                 var query = ctx.InventoryItems.Where(q => q.InventoryId == inventoryId && q.Product.CategoryId == productCatId).OrderBy(q => q.Product.ProductName)
                     .Select(q => new InventoryCountItem
                     {
@@ -86,7 +96,6 @@ namespace Tiplr.Services
                     ProductId = entity.ProductId,
                     OnHandCount = entity.OnHandCount,
                     UpdtUser = entity.Id //user string guid
-
                 };
             }
         }
@@ -113,6 +122,20 @@ namespace Tiplr.Services
                 return ctx.SaveChanges() == 1;
             }
         }
+        //helper
+        private ProductService CreateProductService()
+        {
+            var userId = _userId;
+            var service = new ProductService(userId);
+            return service;
+        }
+        private int GetCurrentInvId()
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity = ctx.Inventories.Single(e => e.Finalized == false);
+                return entity.InventoryId;
+            }
+        }
     }
-
 }

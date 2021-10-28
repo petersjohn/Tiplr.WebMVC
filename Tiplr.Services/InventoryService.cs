@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.ApplicationServices;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,7 +25,7 @@ namespace Tiplr.Services
             }
             var entity = new Inventory()
             {
-                InventoryDate = model.InventoryDate,
+                InventoryDate = DateTimeOffset.Now,//model.InventoryDate
                 CreatedByUser = _userId,
                 Finalized = false,
                 LastModifiedDtTm = DateTimeOffset.Now,
@@ -88,6 +89,9 @@ namespace Tiplr.Services
                 return count;
             }
         }
- 
+        
+
+
+
     }
 }

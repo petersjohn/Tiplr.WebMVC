@@ -9,7 +9,6 @@ namespace Tiplr.Models
 {
     public class InventoryCreate
     {
-        public int InventoryId { get; set; }
         [Display(Name = "Inventory Date")]
         public DateTimeOffset InventoryDate { get; set; }
 
